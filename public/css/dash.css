@@ -1,3 +1,7 @@
 path:hover{
     fill: red;
 }
+
+path{
+    fill: rgb(187, 187, 187)
+}
