@@ -10,7 +10,7 @@ module.exports = (io) => {
     })
     
     router.get('/', (req, res, next) => {
-        if(req.user && req.user == "762749432658788384"){
+        if(req.user && req.user.discordId == "762749432658788384"){
             res.send(req.user)
         }else {
             res.redirect('/api/auth/discord');
