@@ -15,9 +15,9 @@ function loadWorldMap_Event() {
             const p = document.getElementById('text');
             p.innerHTML = name;
             if (name.toLowerCase() == "united states") {
-                window.location.replace('http://localhost:3000/?location=usa');
+                window.location.replace(`http://noob-map.herokuapp.com/?location=usa`);
             }else if (name.toLowerCase() == "vietnam") {
-                window.location.replace('http://localhost:3000/?location=vietnam');
+                window.location.replace('http://noob-map.herokuapp.com/?location=vietnam');
             }
         })
     }

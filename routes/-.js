@@ -9,6 +9,5 @@ module.exports = (io) => {
             res.render('not_loged_in')
         }
     })
-
     return routers
 }
