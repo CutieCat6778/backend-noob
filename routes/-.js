@@ -9,5 +9,10 @@ module.exports = (io) => {
             res.render('not_loged_in')
         }
     })
+
+    routers.get('/invite', (req, res, next) => {
+        res.redirect('https://discord.gg/3Ssz6cKTS5');
+    })
+
     return routers
 }

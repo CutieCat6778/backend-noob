@@ -24,6 +24,7 @@ passport.use(new DiscordStrategy({
 }, async (accessToken, refeshToken, profile, done) => {
     const {id, username, discriminator, avatar, guilds } = profile;
     try{
+        if(!guilds.find(a => a.id == "721203266452586507")) return done(null, null);
         const findUser = await User.findOne({discordId: id});
         if(findUser){
             console.log('User was found!');

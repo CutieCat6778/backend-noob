@@ -5,6 +5,7 @@ module.exports = (io) => {
     router.get('/discord', passport.authenticate('discord'));
 
     router.get('/discord/redirect', passport.authenticate('discord'), (req, res, next) => {
+        if(!req.user) res.defirect('/invite')
         io.sockets.emit('client_loged_in', req.user);
         res.redirect('/')
     })
