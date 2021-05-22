@@ -16,7 +16,7 @@
     <h1>Chào mừng <%= user.username %></h1>
     <p id="text"></p>
     <div id="map-container"><%- !location ? (include ('./maps/world.ejs')) : (include (`./maps/${location}.ejs`)) -%></div>
-    <button ><a href="/?location=world">Trở về bản đồ thế giới!</a></button>
+    <%- !location || location == "world" ? null : (include ('./layouts/button.ejs')) -%>
     <button onClick="submitLocation();" type="button">Gửi</button>
     <script src="/js/dash.js"></script>
 </body>
