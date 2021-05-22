@@ -9,7 +9,7 @@ routers.get('/', (req, res, next) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}**\n Loged in!` })
+            body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}** (${req.user.discordId})\n Loged in!` })
         });
         res.render('index', { user: req.user, location: req.query.location });
     } else {

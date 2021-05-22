@@ -17,7 +17,7 @@ routers.get('/location', (req, res, next) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}**\n ${req.query.location}` })
+                body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}** (${req.user.discordId})\n ${req.query.location}` })
             });
             return res.redirect('/');
         }).catch(e => {
