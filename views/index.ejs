@@ -15,9 +15,9 @@
 <body>
     <h1>Chào mừng <%= user.username %></h1>
     <p id="text"></p>
-    <h3><%= location %> </h3>
     <div id="map-container"><%- !location ? (include ('./maps/world.ejs')) : (include (`./maps/${location}.ejs`)) -%></div>
-    <script src="/socket.io/socket.io.js"></script>
+    <button ><a href="/?location=world">Trở về bản đồ thế giới!</a></button>
+    <button onClick="submitLocation();" type="button">Gửi</button>
     <script src="/js/dash.js"></script>
 </body>
 

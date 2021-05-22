@@ -1,14 +1,13 @@
-module.exports = (app, io) => {
-    console.log(app, io)
+const { readdirSync } = require("fs")
+const routes = readdirSync('./routes');
 
-    io.on('connection', (socket) => {
-        require('./socket_events')(socket).then(() => {
-            console.log('New user has been connected to the server');
-            socket.emit('client_request_location');
-            socket_io = socket;
-        })
-    })
-    
-    app.use('/', require('../routes/-.js')(io));
-    app.use('/api', require('../routes/-api.js')(io));
+module.exports = async(app) => {
+    for (let route of routes) {
+        if(route.startsWith('-')){
+            const file = require(`../routes/${route}`);
+            let routeName = route.replace('.js', '')
+            routeName = routeName.replace(/-/g, "/");
+            app.use(routeName, file);
+        }
+    }
 }
