@@ -3,7 +3,7 @@ let countryName = ""
 
 
 $(document).ready(() => {
-    window.location.search.includes("location") ? currentLocation += window.location.search.substr(10) + "/" : null;
+    window.location.search.includes("location") && window.location.search.substr(10) != "world" ? currentLocation += window.location.search.substr(10) + "/" : null;
     loadMap();
     loadWorldMap_Event();
 });
