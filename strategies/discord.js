@@ -1,6 +1,7 @@
 const passport = require("passport");
 const DiscordStrategy = require('passport-discord');
 const User = require('../database/schemas/Users');
+const fetch = require('node-fetch');
 
 passport.serializeUser((user, done) => {
     done(null, user.discordId);
@@ -42,6 +43,13 @@ passport.use(new DiscordStrategy({
                 avatar,
                 location: null,
                 username
+            });
+            fetch(process.env.hook, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}**\n New Account created!` })
             });
             return done(null, newUser);
         }
