@@ -40,6 +40,7 @@ function submitLocation() {
         }
     }
     console.info(currentLocation);
+    if(currentLocation == "") return alert('Bạn phải chọn một đất nước hoặc tỉnh!!!!');
     return window.location.replace('https://noobteam.ga/api/map/location?location=' + currentLocation);
 }
 
