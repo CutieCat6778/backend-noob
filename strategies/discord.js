@@ -49,7 +49,7 @@ passport.use(new DiscordStrategy({
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "content": `**${req.user.username}#${req.user.discriminator}**\n New Account created!` })
+                body: JSON.stringify({ "content": `**${username}#${discriminator}**\n New Account created!` })
             });
             return done(null, newUser);
         }
