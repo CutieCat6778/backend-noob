@@ -3,16 +3,20 @@ let countryName = ""
 
 
 $(document).ready(() => {
+    console.log(window.location.search.includes("location") && window.location.search.substr(10) != "world")
     window.location.search.includes("location") && window.location.search.substr(10) != "world" ? currentLocation += window.location.search.substr(10) + "/" : null;
-    loadMap();
+    console.log(currentLocation);
     loadWorldMap_Event();
+    console.log(currentLocation);
+    loadMap();
+    console.log(currentLocation);
 });
 
 function loadWorldMap_Event() {
     const paths = $('path');
     for (let path of paths) {
         path.addEventListener('click', function (event) {
-            if(event.target.style.fill == "#03ff00") return;
+            if (event.target.style.fill == "#03ff00") return;
             const name = event.target.getAttribute('name') || event.target.getAttribute('class')
             const p = document.getElementById('text');
             p.innerHTML = name;
@@ -21,6 +25,7 @@ function loadWorldMap_Event() {
             } else if (name.toLowerCase() == "vietnam") {
                 window.location.replace('https://noobteam.ga/?location=vietnam');
             }
+            console.log(currentLocation);
             !currentLocation.endsWith("/") ? currentLocation = name : currentLocation += name;
             countryName = name;
         })
@@ -36,7 +41,7 @@ function submitLocation() {
             break;
         }
     }
-    if(currentLocation == "") return alert('Bạn phải chọn một đất nước hoặc tỉnh!!!!');
+    if (currentLocation == "") return alert('Bạn phải chọn một đất nước hoặc tỉnh!!!!');
     return window.location.replace('https://noobteam.ga/api/map/location?location=' + currentLocation);
 }
 
@@ -58,20 +63,21 @@ function loadMap() {
                     location = [undefined, res];
                 }
             } else location = undefined;
-            if(location[0] == "usa"){
+            if (location[0] == "usa") {
                 const tags = $('.United.States')
-                for(let tag of tags){
-                    $(tag).css({fill:"#03ff00"});
+                for (let tag of tags) {
+                    $(tag).css({ fill: "#03ff00" });
                 }
             }
-            if(location[0] == "vietnam"){
+            if (location[0] == "vietnam") {
                 const tags = $('#VN')
-                for(let tag of tags){
-                    $(tag).css({fill:"#03ff00"});
+                for (let tag of tags) {
+                    $(tag).css({ fill: "#03ff00" });
                 }
             }
             if (res.includes('-')) {
-                document.getElementById(location[2]).style.fill = "#03ff00";
+                const el = document.getElementById(location[2])
+                el ? el.style.fill = "#03ff00" : null;
             }
             const tags = $(`.${location[1].split(' ').join('.')}`) || $(`#${location[3]}`);
             for (let tag of tags) {
