@@ -12,7 +12,7 @@ passport.deserializeUser(async(discordId, done) => {
         const user = await User.findOne({discordId});
         return user ? done(null, user) : done(null, null);
     }catch(e){
-        console.log(e);
+        console.error(e);
         return done(e, null);
     }
 })
@@ -28,7 +28,6 @@ passport.use(new DiscordStrategy({
         if(!guilds.find(a => a.id == "721203266452586507")) return done(null, null);
         const findUser = await User.findOne({discordId: id});
         if(findUser){
-            console.log('User was found!');
             await findUser.updateOne({
                 discriminator,
                 avatar,
@@ -36,7 +35,6 @@ passport.use(new DiscordStrategy({
             }, {new: true})
             return done(null, findUser);
         } else if(!findUser){
-            console.log('User was not found!');
             const newUser = await User.create({
                 discordId: id,
                 discriminator: discriminator,
@@ -54,7 +52,7 @@ passport.use(new DiscordStrategy({
             return done(null, newUser);
         }
     }catch(e){
-        console.log(e);
+        console.error(e);
         return done(e, null);
     }
 }))

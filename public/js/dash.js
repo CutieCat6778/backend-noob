@@ -21,7 +21,6 @@ function loadWorldMap_Event() {
             } else if (name.toLowerCase() == "vietnam") {
                 window.location.replace('https://noobteam.ga/?location=vietnam');
             }
-            console.log(currentLocation)
             !currentLocation.endsWith("/") ? currentLocation = name : currentLocation += name;
             countryName = name;
         })
@@ -29,17 +28,14 @@ function loadWorldMap_Event() {
 }
 
 function submitLocation() {
-    console.log('Client submit');
     const tags = $('path');
     for (let tag of tags) {
         tag = $(tag);
-        console.log(tag.attr('name'));
         if (tag.attr('name') == countryName) {
             currentLocation += "-" + tag.attr('id');
             break;
         }
     }
-    console.info(currentLocation);
     if(currentLocation == "") return alert('Bạn phải chọn một đất nước hoặc tỉnh!!!!');
     return window.location.replace('https://noobteam.ga/api/map/location?location=' + currentLocation);
 }
@@ -48,7 +44,6 @@ function loadMap() {
     fetch('https://noobteam.ga/api/map/location/datas')
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             const res = data.data
             let location = "";
             if (res) {
@@ -63,11 +58,9 @@ function loadMap() {
                     location = [undefined, res];
                 }
             } else location = undefined;
-            console.log(res, location);
             if(location[0] == "usa"){
                 const tags = $('.United.States')
                 for(let tag of tags){
-                    console.log('a')
                     $(tag).css({fill:"#03ff00"});
                 }
             }
@@ -83,7 +76,6 @@ function loadMap() {
             const tags = $(`.${location[1].split(' ').join('.')}`) || $(`#${location[3]}`);
             for (let tag of tags) {
                 tag = $(tag);
-                console.log("name: ",tag.attr('class'));
                 tag.css({ fill: "#03ff00" });
             }
         })

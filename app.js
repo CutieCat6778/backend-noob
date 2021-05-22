@@ -5,7 +5,6 @@ const Express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
@@ -48,7 +47,11 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(logger('dev'));
+
+if(process.env.local){
+    const logger = require('morgan');
+    app.use(logger('dev'));
+}
 
 const moesifMiddleware = moesif({
     applicationId: 'eyJhcHAiOiIzNjU6NTE5IiwidmVyIjoiMi4wIiwib3JnIjoiNjkwOjQyNCIsImlhdCI6MTYxOTgyNzIwMH0.KEVCWB4UV3NevkJWdnQh04gl417rFJClKPucyN1gJzg',
