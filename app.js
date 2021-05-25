@@ -6,10 +6,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const Store = require('connect-mongo')(session);
 const moesif = require('moesif-nodejs');
+const { graphqlHTTP } = require('express-graphql');
+
+const RootSchema = require('./graphql/index.js');
 
 const app = new Express();
 
@@ -21,6 +25,11 @@ const app = new Express();
         useFindAndModify: true
     })
 })();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
 
 app.use(session({
     secret: 'ThinhNguyen2006',
@@ -43,6 +52,11 @@ app.use(Express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/graphql', graphqlHTTP({
+    graphiql: true,
+    schema: RootSchema,
+}));
 
 app.use(cookieParser());
 app.use(bodyParser.json());

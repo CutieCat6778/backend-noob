@@ -4,16 +4,16 @@ const passport = require('passport');
 router.get('/discord', passport.authenticate('discord'));
 
 router.get('/discord/redirect', passport.authenticate('discord'), (req, res, next) => {
-    if (!req.user) res.defirect('/invite');
-    
-    res.redirect('/')
+    res.redirect(`${process.env.URL}dashboard`)
 })
 
 router.get('/', (req, res, next) => {
-    if (req.user && req.user.discordId == "762749432658788384") {
-        res.send(req.user)
+    if (req.user) {
+        if(req.user.guild == "MongooseDocument { null }") return res.status(401).json({msg: "Guild not found!"});
+        else return res.json(req.user)
     } else {
-        res.redirect('/api/auth/discord');
+        res.status(401).send({msg: "Unauthorized!"});
     }
 })
+
 module.exports = router;

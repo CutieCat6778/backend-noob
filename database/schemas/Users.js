@@ -17,9 +17,21 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     location: {
-        type: String,
-        required: false,
-        unique: false
+        country: {
+            type: String,
+            required: false,
+            unique: false
+        },
+        location: {
+            type: String,
+            required: false,
+            unique: false
+        },
+        location_id: {
+            type: String,
+            required: false,
+            unique: false
+        }
     },
     username: {
         type: String,
