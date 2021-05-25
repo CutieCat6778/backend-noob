@@ -32,7 +32,7 @@ app.use(cors({
 }))
 
 app.use(session({
-    secret: 'ThinhNguyen2006',
+    secret: process.env.SECRET_PASS,
     cookie: {
         maxAge: 60000 * 60 * 24
     },
