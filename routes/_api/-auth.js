@@ -16,4 +16,18 @@ router.get('/', (req, res, next) => {
     }
 })
 
+router.get('/logout', (req, res, next) => {
+    if(!req.user) return res.status(401).send({msg: "Unauthorized!"});
+    else if(req.user){
+        try{
+            req.logOut();
+            req.session.destroy(function (err) {
+                res.statusCode(200)
+            });
+        }catch(e){
+            res.status(502).send({msg: e.toString()})
+        }
+    }
+})
+
 module.exports = router;
