@@ -54,7 +54,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/graphql', graphqlHTTP({
-    graphiql: false,
+    graphiql: true,
     schema: RootSchema,
 }));
 

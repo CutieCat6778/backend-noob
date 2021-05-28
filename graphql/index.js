@@ -2,6 +2,7 @@ const {
     GraphQLObjectType, GraphQLString, GraphQLList, GraphQLBoolean, GraphQLInt, GraphQLSchema,
 } = require('graphql');
 const { getUserGuilds } = require('../utils/api');
+const User = require('../database/schemas/Users');
 
 const GuildType = new GraphQLObjectType({
     name: "GuildType",
@@ -56,11 +57,38 @@ const RootQuery = new GraphQLObjectType({
         getUser:{
             type: UserType,
             resolve(parent, args, request){
-                console.log('Getting user!');
                 return request.user ? request.user : null;
             }
-        }
+        },
+        
     }
 });
 
-module.exports = new GraphQLSchema({query: RootQuery});
+const RootMutationQuery = new GraphQLObjectType({
+    name: "RootMutationQuery",
+    fields: {
+        updateUserLocation: {
+            type: UserType,
+            args: {
+                discordId: {type: GraphQLString},
+                country: {type: GraphQLString},
+                location: {type: GraphQLString},
+                location_id: {type: GraphQLString},
+            },
+            async resolve(parent, args, request){
+                const {discordId, location, country, location_id} = args;
+                if(!discordId || !location || !country || !location_id || !request.user) return null;
+                const user = await User.findOne({discordId: discordId}).catch(e => {throw new Error(e)});
+                user.location = {
+                    country,
+                    location,
+                    location_id
+                }
+                await user.save();
+                return user ? user : null;
+            }
+        }
+    }
+})
+
+module.exports = new GraphQLSchema({query: RootQuery, mutation: RootMutationQuery});

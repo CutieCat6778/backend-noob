@@ -18,7 +18,6 @@ routers.get('/user', async(req, res) => {
 routers.get('/user/:id', async(req, res) => {
     if(req.user){
         const data = await getUser(req.user.discordId, req.params.id);
-        console.log(data);
         return res.send(data);
     }else return res.status(401).send({msg: "Unauthorized!"});
 })
