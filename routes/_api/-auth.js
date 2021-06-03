@@ -4,7 +4,7 @@ const passport = require('passport');
 router.get('/discord', passport.authenticate('discord'));
 
 router.get('/discord/redirect', passport.authenticate('discord'), (req, res, next) => {
-    res.redirect(`${process.env.URL}dashboard`)
+    res.redirect(`${process.env.URL}`)
 })
 
 router.get('/', (req, res, next) => {
@@ -22,7 +22,8 @@ router.get('/logout', (req, res, next) => {
         try{
             req.logOut();
             req.session.destroy(function (err) {
-                res.statusCode(200)
+                if(err) return res.status(500).send({msg: err.stack})
+                return res.status(200)
             });
         }catch(e){
             res.status(502).send({msg: e.toString()})
