@@ -10,7 +10,6 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const Store = require('connect-mongo')(session);
-const moesif = require('moesif-nodejs');
 const { graphqlHTTP } = require('express-graphql');
 
 const RootSchema = require('./graphql/index.js');
@@ -30,6 +29,18 @@ app.use(cors({
     origin: process.env.URL,
     credentials: true
 }))
+
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    } else {
+        next();
+    }
+});
 
 app.use(session({
     secret: process.env.SECRET_PASS,
@@ -62,7 +73,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-if(process.env.local){
+if (process.env.local) {
     const logger = require('morgan');
     app.use(logger('dev'));
 }
