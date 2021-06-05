@@ -42,7 +42,9 @@ passport.use(new DiscordStrategy({
             findCredentials.accessToken = encryptedAccessToken;
             findCredentials.refreshToken = encryptedRefreshToken;
             await findCredentials.save();
-            return done(null, findUser);
+            return process.nextTick(() => {
+                return done(null, findUser);
+            })
         } else if (!findUser) {
             const newUser = await User.create({
                 discordId: id,
@@ -55,7 +57,7 @@ passport.use(new DiscordStrategy({
                 },
                 username,
             });
-            const newCredentials = await Oauth2.create({
+            await Oauth2.create({
                 accessToken: encryptedAccessToken,
                 refreshToken: encryptedRefreshToken,
                 discordId: id
@@ -67,7 +69,9 @@ passport.use(new DiscordStrategy({
                 },
                 body: JSON.stringify({ "content": `**${username}#${discriminator}** (${id})\n New Account created!` })
             });
-            return done(null, newUser);
+            return process.nextTick(() => {
+                return done(null, newUser);
+            })
         }
     } catch (e) {
         console.error(e);
