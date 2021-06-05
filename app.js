@@ -46,9 +46,7 @@ app.use(session({
     secret: process.env.SECRET_PASS,
     cookie: {
         maxAge: 60000 * 60 * 24,
-        sameSite: "none",
-        httpOnly: false,
-        secure: true
+        domain: 'noobteam.ga'
     },
     resave: false,
     saveUninitialized: false,
