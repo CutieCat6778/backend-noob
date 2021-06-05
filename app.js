@@ -32,7 +32,7 @@ app.use(cors({
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', 'https://www.noobteam.ga');
+    res.header('Access-Control-Allow-Origin', process.env.URL);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
     if ('OPTIONS' == req.method) {
@@ -46,11 +46,12 @@ app.use(session({
     secret: process.env.SECRET_PASS,
     cookie: {
         maxAge: 60000 * 60 * 24,
+        sameSite: "none",
+        httpOnly: false,
+        secure: true
     },
     resave: false,
     saveUninitialized: false,
-    sameSite: "none",
-    httpOnly: false,
     store: new Store({
         mongooseConnection: mongoose.connection
     })
