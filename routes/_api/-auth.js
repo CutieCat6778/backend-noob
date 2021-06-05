@@ -3,8 +3,10 @@ const passport = require('passport');
 
 router.get('/discord', passport.authenticate('discord'));
 
-router.get('/discord/redirect', passport.authenticate('discord'), (req, res, next) => {
-    res.redirect(`${process.env.URL}`)
+router.get('/discord/redirect', passport.authenticate('discord', { failureRedirect: '/api/auth/' }), (req, res, next) => {
+    // successful auth, user is set at req.user.  redirect as necessary.
+    if (!req.user) { return res.status(401).send({msg: "Unauthorized!"}); }
+    res.redirect(process.env.URL);
 })
 
 router.get('/', (req, res, next) => {

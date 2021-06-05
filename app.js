@@ -67,16 +67,4 @@ if(process.env.local){
     app.use(logger('dev'));
 }
 
-const moesifMiddleware = moesif({
-    applicationId: 'eyJhcHAiOiIzNjU6NTE5IiwidmVyIjoiMi4wIiwib3JnIjoiNjkwOjQyNCIsImlhdCI6MTYxOTgyNzIwMH0.KEVCWB4UV3NevkJWdnQh04gl417rFJClKPucyN1gJzg',
-
-    identifyUser: function (req, res) {
-        return req.user ? req.user.id : undefined;
-    },
-});
-
-app.use(moesifMiddleware);
-
-
-
 module.exports = app;
